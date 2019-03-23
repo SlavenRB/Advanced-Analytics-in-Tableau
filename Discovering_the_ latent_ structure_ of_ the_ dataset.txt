@@ -1,0 +1,28 @@
+pt <-read.table ("C:\\Users\\Slaven\\Desktop\\personality_
+traits.csv", header=T, sep=",")
+pt.pc <- prcomp(pt, scale = TRUE)
+X1 <- pt.pc$x [, 1]
+X2 <- pt.pc$x [, 2]
+X3 <- pt.pc$x [, 3]
+X4 <- pt.pc$x [, 4]
+X5 <- pt.pc$x [, 5]
+scores <- cbind(pt, X1, X2, X3, X4, X5)
+colnames(scores)[17] <- "X1"
+colnames(scores)[18] <- "X2"
+colnames(scores)[19] <- "X3"
+colnames(scores)[20] <- "X4"
+colnames(scores)[21] <- "X5"
+write.csv (scores, "C:\\Users\\Slaven\\Desktop\\scores.csv")
+loadings <- as.data.frame(pt.pc$rotation)
+loadings <- loadings[2:16, 1:5]
+loadings$trait <- row.names(loadings)
+rownames(loadings) <- c()
+path <-matrix(1,15,1)
+up <- cbind(loadings,path)
+zero <-matrix(0, 15, 6)
+trait <- as.data.frame(loadings [,6])
+down <-cbind (zero, trait)
+colnames(down) <- c("PC1","PC2","PC3","PC4","PC5", "path", "trait")
+pt.loadings <- rbind(up, down)
+write.csv (pt.loadings,
+"C:\\Users\\Slaven\\Desktop\\pt.loadings.csv")

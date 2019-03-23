@@ -1,0 +1,25 @@
+install.packages('ca',repos='http://cran.us.r-project.org')
+library(ca)
+df <- read.table("C:\\Users\\Slaven\\Desktop\\telco_image.csv",
+header=T, sep=",")
+n <-ncol(df)
+blank <-matrix(NA, 1 ,n)
+blank$brands <- c(colnames(df))
+brands <- as.data.frame(blank$brands[-1])
+names(brands) <- "labels"
+labels <-df [ ,1]
+labels <- as.data.frame(labels)
+labels.df <- rbind(labels,brands)
+type1 <-as.data.frame(rep("Brand", nrow(brands)))
+names(type1) <- "Type"
+type2 <-as.data.frame(rep("Feature", nrow(labels)))
+names(type2) <- "Type"
+type.df <- rbind(type2, type1)
+num.df<- df[,-1]
+c<-ca(num.df)
+X <-append(c$rowcoord[,1],c$colcoord[,1], )
+Y <-append(c$rowcoord[,2],c$colcoord[,2], )
+axes <- data.frame(cbind(X,Y))
+fin.data <- cbind(axes,type.df,labels.df)
+write.csv(fin.data,
+"C:\\Users\\Slaven\\Desktop\\CA_input_data.csv")

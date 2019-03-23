@@ -1,0 +1,9 @@
+install.packages('rpart',repos='http://cran.us.r-project.org')
+library(rpart)
+cars <- read.table("C:\\!Slaven\\6 KNJIGA\\4 Advanced analytics\\4
+decision tree\\new_or_used_car.csv", header=T, sep=",")
+fit <- rpart(FuturePurchase ~ Age + Gender + Education +
+FamilyStatus + CurrentCar + AgeOfCurrentCar + MunicipalityType,
+method="class", data=cars)
+plot(fit, uniform=TRUE, main="Classification of new cars buyers")
+text(fit, all=TRUE, cex=.8)

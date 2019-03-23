@@ -1,0 +1,3 @@
+IF SCRIPT_REAL("library(mvoutlier);sign2(cbind(.arg1,
+.arg2))$wfinal01", AVG([Age]), AVG([Blood Pressure])) == 0 THEN
+"Outlier" ELSE "OK" END
